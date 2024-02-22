@@ -13,4 +13,38 @@ Combine, a *declarative* library by Apple, is utilized in several parts of Rsync
 - [observing signals](https://github.com/rsyncOSX/RsyncUI/blob/main/RsyncUI/Model/Process/Main/Async/RsyncProcessAsync.swift) within the process object,
 - debouncing input from user, filter strings and other values which are validated before saving
 
-The user input for search or filter is by default a `@State` string variable. The view reacts on the input by every keypress and the filter algorithm is triggered by every keypress. This causes a sluggish user interface, but by debounce input by *a second* causes the filter algorithm only to update the view after the debounce period.
+## Debounce
+
+Combine is used for debounc user input in filter search. The user input for search or filter is by default a `@State` string variable. The view reacts on the input by every keypress and the filter algorithm is triggered by every keypress. This causes a sluggish user interface, but by debounce input by *a second* causes the filter algorithm only to update the view after the debounce period.
+
+```bash
+struct LogsbyConfigurationView: View {
+    @Bindable var rsyncUIlogrecords: RsyncUIlogrecords
+    ..
+    // Filterstring
+    @State private var filterstring: String = ""
+    @State var publisher = PassthroughSubject<String, Never>()
+    @State private var debouncefilterstring: String = ""
+    @State private var showindebounce: Bool = false
+    
+     var body: some View {
+     ...
+     }
+     .searchable(text: $filterstring)
+     .onChange(of: filterstring) {
+            showindebounce = true
+            publisher.send(filterstring)
+      }
+     .onReceive(
+            publisher.debounce(
+                for: .seconds(1),
+                scheduler: DispatchQueue.main
+            )
+        ) { filter in
+            showindebounce = false
+            debouncefilterstring = filter
+            Task {
+                await updatelogs()
+            }
+    }
+```

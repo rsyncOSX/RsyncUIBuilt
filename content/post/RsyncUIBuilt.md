@@ -7,9 +7,7 @@ categories = ["general information"]
 lastmod = "2024-02-22"
 +++
 
-RsyncUI is a pure *SwiftUI* based macOS application utilizing the command line tool `rsync` for synchronizing files. It is `rsync` which executes the real synchronizing task, not RsyncUI. RsyncUI is a GUI only on top of rsync. RsyncUI is signed and notarized by Apple.  
-
-This page is an overview of the main components of RsyncUI. The development of both RsyncOSX and RsyncUI has been an evolving process. The open source community has been and still is a great resource for ideas and how to solve issues. Both apps today are stable and in a state of maintenance. 
+RsyncUI is a pure *SwiftUI*  and Swift based macOS application utilizing the command line tool `rsync` for synchronizing files. It is `rsync` which executes the real synchronizing task, not RsyncUI. RsyncUI is a GUI only on top of rsync. RsyncUI is signed and notarized by Apple.   This web is an overview of the main components of RsyncUI. The development of RsyncUI has been an evolving process. The open source community has been and still is a great resource for ideas and how to solve issues. Both apps today are stable and in a state of maintenance. 
 
 Some numbers:
 
@@ -18,9 +16,9 @@ Some numbers:
 | RsyncUI  | JSON files |  about 13.3K     | about 162       | 6 May 2021 |
 | RsyncOSX  |  JSON files |  about 11K   | about 121      | 14 March 2016 |	
 
-Which application should I use? Both applications do the same job, but RsynUI is more feature-rich, and the GUI, including navigation, is better. **Are you on macOS Sonoma?** Go for RsyncUI. And for the last year and years to come, all development has been and will be within RsyncUI. RsyncOSX is bugfixed only.
+Which application should I use? Both applications do the same job, but RsynUI is more feature-rich, and the GUI, including navigation, is better. **Are you on macOS Sonoma?** Go for RsyncUI. And for the last year and years to come, all development has been and will be within RsyncUI. 
 
-# RsyncUI vs RsyncOSX
+# The future
 
 Apple is clear: *SwiftUI*, which RsyncUI is developed by, is the future. This means *all new development* is on RsyncUI. The main differences between the two apps are the user interface (UI) and how the UI is built. There has also been a lot of cleanup and enhancements in code of RsyncUI. My advice is use RsyncUI. Both apps utilise another great declarative library, Combine, developed by Apple, and JSON files for storing tasks, log records, and user configuration. And the latest development, for test, is a version of RsyncUI using SwiftData instead of JSON files as storage. There is some more info about SwiftData later on this page.
 

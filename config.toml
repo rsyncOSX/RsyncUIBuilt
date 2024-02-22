@@ -1,10 +1,10 @@
-baseURL = "https://rsyncui.netlify.app/"
-title = "RsyncUI "
+baseURL = "https://rsyncuibuilt.netlify.app/"
+title = "RsyncUI built "
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
-googleAnalytics = "G-T68PYCDHJ5"
+# googleAnalytics = "G-T68PYCDHJ5"
 preserveTaxonomyNames = true
 paginate = 10 #frontpage pagination
 hasCJKLanguage = false

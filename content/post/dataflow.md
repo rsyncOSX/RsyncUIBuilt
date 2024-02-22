@@ -6,9 +6,9 @@ tags = ["SwiftData","JSON"]
 categories = ["dataflow"]
 lastmod = "2024-02-22"
 +++
-The flow and handling of data are slightly different in the JSON-file vs SwiftData version.  Using SwiftData in RsyncUI is a test project for learning about SwiftData and check out if SwiftData and RsyncUI is a good match. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   There are *three files* saved to storage: tasks, log records and user settings.
+The flow and handling of data are slightly different in RsyncUI using JSON file vs SwiftData. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   There are *three files* saved to storage: tasks, log records and user settings.
 
-# JSON as Storage
+# JSON files as Storage
 
 All files are saved as JSON files and `Combine` is utilized to read and save data. JSON files are *encoded* before a write operation and *decoded* when read from storage. The encode and decode is requiered to represent JSON data as internal data within RsyncUI. Both reading data and saving data to JSON-files are explict actions in code.  When RsyncUI starts it reads *user configuration* and *data about tasks for the default profile*. The object holding data about tasks is an `@Observable` object created when RsyncUI starts.
 
@@ -63,7 +63,7 @@ final class SynchronizeConfiguration: Identifiable {
     var profile: String = "Default profile"
    }
 ```
-For every task added, a `LogRecords` is created the first time the task is executed. Every log for this task is stored in the `@Relationship(deleteRule: .cascade, inverse: \Log.logrecord) var records: [Log]?` variable. 
+For every task added a `LogRecords` is created the first time the task is executed. Every log for this task is stored in the `@Relationship(deleteRule: .cascade, inverse: \Log.logrecord) var records: [Log]?` variable. 
 
 ```bash
 @Model
@@ -97,7 +97,6 @@ final class Log: Identifiable {
     }
 }
 ```
-
 The datamodel is initialized when the app is starting, if first time the datastore is automatically created . 
 
 ```bash

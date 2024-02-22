@@ -2,8 +2,8 @@
 author = "Thomas Evensen"
 date = "2024-02-22"
 title =  "Dataflow in RsyncUI"
-tags = ["dataflow"]
-categories = ["dataflow, swiftdata, JSON"]
+tags = ["dataflow, SwiftData, JSON"]
+categories = ["dataflow"]
 lastmod = "2024-02-22"
 +++
 The flow and handling of data are slightly different in the JSON-file vs SwiftData version.  Using SwiftData in RsyncUI is a test project for learning about SwiftData and check out if SwiftData and RsyncUI is a good match. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   There are *three files* saved to storage: tasks, log records and user settings.

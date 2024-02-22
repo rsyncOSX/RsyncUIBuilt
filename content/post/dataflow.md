@@ -63,7 +63,7 @@ final class SynchronizeConfiguration: Identifiable {
     var profile: String = "Default profile"
    }
 ```
-The datamodel for LogRecords is:
+For every task added, a `LogRecords` is created the first time the task is executed. Every log for this task is stored in the `@Relationship(deleteRule: .cascade, inverse: \Log.logrecord) var records: [Log]?` variable. 
 
 ```bash
 @Model

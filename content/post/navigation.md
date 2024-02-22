@@ -1,10 +1,10 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-22"
+date = "2024-02-20"
 title =  "Navigation"
-tags = ["navigation"]
-categories = ["navigation"]
-lastmod = "2024-02-22"
+tags = ["NavigationSplitView","NavigationStack"]
+categories = ["Navigation"]
+lastmod = "2024-02-20"
 +++
 The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function.  The details part is computed every time the user select a function like the Synchronize view, Tasks view and so on. The navigation within usersetting is also by `NavigationSplitView`.
 

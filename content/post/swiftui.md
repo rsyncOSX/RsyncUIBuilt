@@ -1,15 +1,12 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-22"
+date = "2024-02-20"
 title =  "SwiftUI"
 tags = ["SwiftUI"]
 categories = ["SwiftUI"]
-lastmod = "2024-02-22"
+lastmod = "2024-02-20"
 +++
-
-SwiftUI is the latest declarative framework developed by Apple for views, controls, and layout structures for user interface. 
-
-RsyncUI utilizes SwiftUI for the UI. UI components are views, which is a value type `struct` and not a reference type `class`. UI components are added to RsyncUI by code. Every time a property within a SwiftUI view is changed the view is recreated by the runtime. In SwitfUI there are several property wrappers to create bindings to mutable properties.
+SwiftUI is the latest declarative framework developed by Apple for views, controls, and layout structures for user interface. RsyncUI utilizes SwiftUI for the UI. UI components are views, which is a value type `struct` and not a reference type `class`. UI components are added to RsyncUI by code. Every time a property within a SwiftUI view is changed the view is recreated by the runtime. In SwitfUI there are several property wrappers to create bindings to mutable properties.
 
 # Start of RsyncUI
 

@@ -1,10 +1,10 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-22"
+date = "2024-02-20"
 title =  "Execution"
-tags = ["execution"]
-categories = ["execution"]
-lastmod = "2024-02-22"
+tags = ["Execution"]
+categories = ["Execution"]
+lastmod = "2024-02-20"
 +++
 There are several ways to execute tasks:
 

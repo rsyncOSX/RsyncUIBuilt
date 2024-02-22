@@ -2,11 +2,10 @@
 author = "Thomas Evensen"
 title = "RsyncUI - how is it built"
 date = "2024-02-22"
-tags = ["overview"]
-categories = ["general information"]
+tags = ["Overview"]
+categories = ["Overview"]
 lastmod = "2024-02-22"
 +++
-
 RsyncUI is a pure *SwiftUI*  and Swift based macOS application utilizing the command line tool `rsync` for synchronizing files. It is `rsync` which executes the real synchronizing task, not RsyncUI. RsyncUI is a GUI only on top of rsync. RsyncUI is signed and notarized by Apple.   This web is an overview of the main components of RsyncUI. The development of RsyncUI has been an evolving process. The open source community has been and still is a great resource for ideas and how to solve issues. Both apps today are stable and in a state of maintenance.  Check out  [the categories](/categories).
 
 Some numbers:

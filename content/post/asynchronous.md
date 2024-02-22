@@ -1,10 +1,10 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-22"
+date = "2024-02-20"
 title =  "Asynchronous execution"
-tags = ["async"]
-categories = ["async"]
-lastmod = "2024-02-22"
+tags = ["Asynchronous"]
+categories = ["Asynchronous"]
+lastmod = "2024-02-20"
 +++
 Asynchronous execution is a key component of RsyncUI. Every time a `rsync` synchronize and restore task is executed the termination of the task is not known ahead.  When the *termination signal* is observed some actions are required. Some actions are like send a message about a task is completed, execute next synchronize task, stopping a progressview and do some logging. 
 

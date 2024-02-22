@@ -3,15 +3,12 @@ author = "Thomas Evensen"
 date = "2024-02-22"
 title =  "Dataflow in RsyncUI"
 tags = ["dataflow"]
-categories = ["dataflow"]
+categories = ["dataflow, swiftdata, JSON"]
 lastmod = "2024-02-22"
 +++
+The flow and handling of data are slightly different in the JSON-file vs SwiftData version.  Using SwiftData in RsyncUI is a test project for learning about SwiftData and check out if SwiftData and RsyncUI is a good match. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   There are *three files* saved to storage: tasks, log records and user settings.
 
-The flow and handling of data are slightly different in the JSON-file vs SwiftData version.  Using SwiftData in RsyncUI is a test project for learning about SwiftData and check out if SwiftData and RsyncUI is a good match. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.  
-
-There are *three files* saved to storage: tasks, log records and user settings.
-
-## JSON 
+# JSON as Storage
 
 All files are saved as JSON files and `Combine` is utilized to read and save data. JSON files are *encoded* before a write operation and *decoded* when read from storage. The encode and decode is requiered to represent JSON data as internal data within RsyncUI. Both reading data and saving data to JSON-files are explict actions in code.  When RsyncUI starts it reads *user configuration* and *data about tasks for the default profile*. The object holding data about tasks is an `@Observable` object created when RsyncUI starts.
 
@@ -24,7 +21,7 @@ All views which require data about tasks get data by a mutable property wrapper 
 
 When there are changes on data the complete datastructure is written to file, like if there are 2000 logrecords and adding a new log record causes 2001 records to be written to the JSON-file. Data for the views are made avaliable by a `@Bindable` property and an `@Observable` object.  
 
-## SwiftData 
+# SwiftData as Storage
 
 [RsyncUISwiftData](https://github.com/rsyncOSX/RsyncUISwiftData) is the repository for the SwiftData version of RsyncUI.  One of the main differences compared to the JSON-file version of RsyncUI are that read and updates of data is taken care of by SwiftData. Every time a view needs data it is only requiered to use the `@Environment` to get the model and a `@Query` property wrapper to get the actal data data. 
 
@@ -66,14 +63,48 @@ final class SynchronizeConfiguration: Identifiable {
     var profile: String = "Default profile"
    }
 ```
+The datamodel for LogRecords is:
+
+```bash
+@Model
+final class LogRecords: Identifiable {
+    var id = UUID()
+    @Attribute(.unique) var hiddenID: Int
+    var dateStart: String
+    @Relationship(deleteRule: .cascade, inverse: \Log.logrecord) var records: [Log]?
+
+    init(id: UUID = UUID(), hiddenID: Int, dateStart: String, records: [Log]? = nil) {
+        self.id = id
+        self.hiddenID = hiddenID
+        self.dateStart = dateStart
+        self.records = records
+    }
+}
+
+@Model
+final class Log: Identifiable {
+    var id = UUID()
+    var dateExecuted: String
+    var resultExecuted: String
+    var logrecord: LogRecords?
+    @Relationship(inverse: \LogRecords.records)
+
+    init(id: UUID = UUID(), dateExecuted: String, resultExecuted: String, logrecord: LogRecords? = nil) {
+        self.id = id
+        self.dateExecuted = dateExecuted
+        self.resultExecuted = resultExecuted
+        self.logrecord = logrecord
+    }
+}
+```
+
 The datamodel is initialized when the app is starting, if first time the datastore is automatically created . 
 
 ```bash
  var sharedModelContainer: ModelContainer = {
         let schema = Schema([SynchronizeConfiguration.self,
                              UserConfiguration.self,
-                             LogRecords.self,
-                             Log.self])
+                             LogRecords.self])
 
         let storeURL = URL.documentsDirectory.appending(path: "rsyncui.sqlite")
         let configuration = ModelConfiguration(schema: schema, url: storeURL)
@@ -96,7 +127,11 @@ Window("RsyncUI", id: "main") {
 
 You can create relations and much more in SwiftData, but for RsyncUI there is no need for an advanced datamodel. When data is changed, like update timestamp or create a log, the changes are propogated up to the view which initiated the change. The data is updated to the database by SwiftData and SwiftUI updates the views on the fly.  
 
-## Sorting  and filter logs - SwiftData vs JSON
+# Sorting  and filter
+
+Sorting and filter data is slightly different using JSON or SwiftData as storage. Below is, as an exsample, of how to sort and filter log records.
+
+## SwiftData
 
 Showing logcrecords by task, sorted by Date is done by getting the data by a `@Query` property using a Sortdescriptor. The View is *initialized* from the parent view sending in the UUID for the selected task, and a Predicate filter shows logs by UUID and a filter by date.
 
@@ -158,6 +193,9 @@ struct LogRecordsTableByUUIDView: View {
     }
 }
 ````
+
+## JSON
+
 Filter and sort log records in JSON-file version is slightly different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
 
 ```bash

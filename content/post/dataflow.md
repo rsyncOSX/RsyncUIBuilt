@@ -2,7 +2,7 @@
 author = "Thomas Evensen"
 date = "2024-02-22"
 title =  "Dataflow in RsyncUI"
-tags = ["dataflow, SwiftData, JSON"]
+tags = ["dataflow", "SwiftData, "JSON"]
 categories = ["dataflow"]
 lastmod = "2024-02-22"
 +++

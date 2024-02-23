@@ -6,24 +6,46 @@ tags = ["SwiftData","JSON"]
 categories = ["dataflow"]
 lastmod ="2024-02-20"
 +++
-The flow and handling of data are slightly different in RsyncUI using JSON file vs SwiftData. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   There are *three files* saved to storage: tasks, log records and user settings.
+The flow and handling of data are slightly different in RsyncUI using JSON file vs SwiftData. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   
+
+There are *three files* saved to storage: tasks, log records and user settings.
 
 # JSON files as Storage
 
-All files are saved as JSON files and `Combine` is utilized to read and save data. JSON files are *encoded* before a write operation and *decoded* when read from storage. The encode and decode is requiered to represent JSON data as internal data within RsyncUI. Both reading data and saving data to JSON-files are explict actions in code.  When RsyncUI starts it reads *user configuration* and *data about tasks for the default profile*. The object holding data about tasks is an `@Observable` object created when RsyncUI starts.
+All files are saved as JSON files and `Combine` is utilized to read and save data. JSON files are *encoded* before a write operation and *decoded* when read from storage. The encode and decode is requiered to represent JSON data as internal data within RsyncUI. Both reading data and saving data to JSON-files are explicit actions in code.  When RsyncUI starts it reads *user configuration* and *data about tasks for the default profile*. 
 
 ```bash
  var rsyncUIdata: RsyncUIconfigurations {
         return RsyncUIconfigurations(selectedprofile)
     }
 ```
-All views which require data about tasks get data by a mutable property wrapper `@Bindable var rsyncUIdata: RsyncUIconfigurations`.  Within `RsyncUIconfigurations` there is a observed variable holding the data structure about tasks. When tasks are updated, like timestamp last run, the class which executes the tasks does two jobs when executing tasks is completed. The internal datastructure is always updated. The first job is to send the changed updated datastructure up to the view by an *escaping closure*, `@escaping ([SynchronizeConfiguration]) -> Void)`. The view updates the observed variable holding the data structure about tasks and the SwiftUI runtime updates the views. The second job is to write the updates the permanent storage.
+All views which require data about tasks get data by a mutable property wrapper `@Bindable var rsyncUIdata: RsyncUIconfigurations`.  Within the  `@Observable final class RsyncUIconfigurations` there is a observed variable holding the data structure about tasks. 
+```bash
+import Observation
+import SwiftUI
+
+@Observable
+final class RsyncUIconfigurations {
+    var configurations: [SynchronizeConfiguration]?
+    var profile: String?
+
+    init(_ profile: String?) {
+        self.profile = profile
+        if profile == SharedReference.shared.defaultprofile || profile == nil {
+            configurations = ReadConfigurationJSON(nil).configurations
+        } else {
+            configurations = ReadConfigurationJSON(profile).configurations
+        }
+    }
+}
+```
+When tasks are updated, like timestamp last run, the class which executes the tasks does two jobs when executing tasks is completed. The internal datastructure is always updated. The first job is to send the changed updated datastructure up to the view by an *escaping closure*, `@escaping ([SynchronizeConfiguration]) -> Void)`. The view updates the observed variable holding the data structure about tasks and the SwiftUI runtime updates the views. The second job is to write the updates the permanent storage.
 
 When there are changes on data the complete datastructure is written to file, like if there are 2000 logrecords and adding a new log record causes 2001 records to be written to the JSON-file. Data for the views are made avaliable by a `@Bindable` property and an `@Observable` object.  
 
 # SwiftData as Storage
 
-[RsyncUISwiftData](https://github.com/rsyncOSX/RsyncUISwiftData) is the repository for the SwiftData version of RsyncUI.  One of the main differences compared to the JSON-file version of RsyncUI are that read and updates of data is taken care of by SwiftData. Every time a view needs data it is only requiered to use the `@Environment` to get the model and a `@Query` property wrapper to get the actal data data. 
+[RsyncUISwiftData](https://github.com/rsyncOSX/RsyncUISwiftData) is the repository for the SwiftData version of RsyncUI.  One of the main differences compared to the JSON-file version of RsyncUI are that read and updates of data is taken care of by SwiftData. Every time a view needs data it is only requiered to use the `@Environment` to get the model and a `@Query` property wrapper to get the actual data. 
 
 ```bash
 struct Sidebar: View {
@@ -31,7 +53,7 @@ struct Sidebar: View {
     @Query private var configurations: [SynchronizeConfiguration]
 ```
 
-There are two database operations used, insert and delete. Updates of data is by selecting the record and update, SwiftData takes care of updating the database and informes the views to update. To use SwiftData there is an import of SwiftData Library. The datastructure in RsyncUI is a struct, but SwiftData requiere `@Model final class`, that is the structs holding the datamodels are modified to class:
+There are two database operations used, insert and delete. Updates of data is by selecting the record and update, SwiftData takes care of updating the database and informes the views to update. The datastructure in RsyncUI is a struct, but SwiftData requiere `@Model final class`, that is the structs holding the datamodels are modified to class:
 
 ```bash
 import Foundation
@@ -128,7 +150,7 @@ You can create relations and much more in SwiftData, but for RsyncUI there is no
 
 # Sorting  and filter
 
-Sorting and filter data is slightly different using JSON or SwiftData as storage. Below is, as an exsample, of how to sort and filter log records.
+Sorting and filter data is different using JSON or SwiftData as storage. Below is, as an exsample, of how to sort and filter log records.
 
 ## SwiftData
 
@@ -195,7 +217,7 @@ struct LogRecordsTableByUUIDView: View {
 
 ## JSON
 
-Filter and sort log records in JSON-file version is slightly different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
+Filter and sort log records in JSON-file version is different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
 
 ```bash
 func updatelogs() async {
@@ -206,14 +228,15 @@ func updatelogs() async {
                     for i in 0 ..< logrecords.count {
                         merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
                     }
-                    // return merged.sorted(by: \.date, using: >)
                     let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
+                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
+                    ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
                     }
                 } else {
                     if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
                         let records = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                        logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
+                        logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
+                        ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
                         }
                     }
                 }
@@ -223,7 +246,6 @@ func updatelogs() async {
                     for i in 0 ..< logrecords.count {
                         merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
                     }
-                    // return merged.sorted(by: \.date, using: >)
                     logs = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
                 } else {
                     if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {

@@ -1,5 +1,5 @@
 baseURL = "https://rsyncuibuilt.netlify.app/"
-title = "RsyncUI built "
+title = "RsyncUI - how is it built?"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname

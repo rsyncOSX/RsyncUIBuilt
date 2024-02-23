@@ -1,27 +1,22 @@
 +++
 author = "Thomas Evensen"
-title = "RsyncUI - how is it built"
+title = "RsyncUI - overview"
 date = "2024-02-22"
 tags = ["Overview"]
 categories = ["Overview"]
 lastmod = "2024-02-22"
 +++
-RsyncUI is a pure *SwiftUI*  and Swift based macOS application utilizing the command line tool `rsync` for synchronizing files. It is `rsync` which executes the real synchronizing task, not RsyncUI. RsyncUI is a GUI only on top of rsync. RsyncUI is signed and notarized by Apple.   This web is an overview of the main components of RsyncUI. The development of RsyncUI has been an evolving process. The open source community has been and still is a great resource for ideas and how to solve issues.
+RsyncUI is a pure *SwiftUI*  and Swift based macOS application utilizing the command line tool `rsync` for synchronizing files. It is `rsync` which executes the real synchronizing task, not RsyncUI. RsyncUI is a GUI only on top of rsync. The development of RsyncUI has been an evolving process. The open source community has been and still is a great resource for ideas and how to solve issues. The SwiftData version of RsyncUI is developed, but not released as a dmg file. 
 
 | App      | Storage  | Lines of code | Swift files | Version 1.0 |
 | ----------- | ----------- |   ----------- | -------- | -------- |
 | RsyncUI  | JSON files |  about 13.3K     | about 162       | 6 May 2021 |
 | RsyncUI  | SwiftData |  about 11.7K     | about 137       | February 2024 |
 
-The SwiftData version of RsyncUI is developed, but not released as a dmg file. 
+# Why this site
 
-# A few words about the code
+RsyncUI is by no means an advanced or complicated application. But it is a pure SwiftUI and Swift based application, and learning about both languages has been and still is fun. And writing about the development is also fun. So there are no deeper thoughts about this web. There are many developers out there writing about SwiftUI, discovering new features, and how to use them. I am reading some of this myself, and this web is more about how I use SwiftUI features. 
 
-Even though I am an educated IT person, most of my professional work has been as an IT manager and not a developer. Most of my coding experience is with private projects such as RsyncOSX and RsyncUI. Google is and has been a great resource for research and advice on how to solve specific problems. Reading about other developers code and discussions is always valuable input for me. The MVC pattern and single source of truth are important patterns for both apps. I have also tried to use all Apple Frameworks, utilizing most of the required built-in functions.  And even if there are many lines of code in both apps, I have tried to write as little code as possible. So if you are looking at my code, keep this in mind: my code is only one of many solutions.
-
-I also believe there is no right or wrong in development. Each developer and team chooses their way to develop based on their skills and what they want to achieve. I know my own code, and I have no issues understanding what my code is doing. And as times go on, in my opinion, I make changes to the code for the better. I also fully understand that other developers might have some issues understanding my code. 
-
-What I also experience is how my own understanding of OO, declarative programming, Swift and SwiftUI is growing. I would never write code today, as I did when I commenced my project in 2015 to learn Swift. But still, I am not a professional programmer, and there are several topics within Swift and SwiftUI that I do not understand. But I am capable of learning; if I spend enough time on a topic, there is a good probability that I will get the idea.
 
 # Why not App Store
 

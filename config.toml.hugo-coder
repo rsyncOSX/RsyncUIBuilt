@@ -3,7 +3,7 @@ title = "RsyncUI - how is it built?"
 theme = "hugo-coder"
 languageCode = "en"
 defaultContentLanguage = "en"
-paginate = 12
+paginate = 6
 enableEmoji = true
 # Enable Disqus comments
 # disqusShortname = "yourdiscussshortname"
@@ -73,7 +73,7 @@ customRemoteJS = []
 
 # If you want to use Google Tag Manager(https://analytics.google.com/) for analytics, add this section
 # [params.googleTagManager]
-id = "G-4BLSQR9M06"
+# id = "gid"
 
 # If you want to use Yandex Metrika(https://metrika.yandex.ru) for analytics, add this section
 # [params.yandexMetrika]

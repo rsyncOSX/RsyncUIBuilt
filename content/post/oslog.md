@@ -3,7 +3,7 @@ author = "Thomas Evensen"
 date = "2024-02-20"
 title =  "Application logging"
 tags = ["OSLog"]
-categories = ["OSLog"]
+categories = ["Overview"]
 lastmod = "2024-02-20"
 +++
 Included in Swift 5 there is a unified logging feature `OSLog`. There are several methods for logging and investigate what the application is up to. By using OSLog there is no need for print statements to follow execution. All logging is by utilizing OSLog displayed as part of Xcode. The `Process` objects are where all the real work is done. OSLog is  included in all objects which perform work and it is very easy to check which commands RsyncUI are executing.

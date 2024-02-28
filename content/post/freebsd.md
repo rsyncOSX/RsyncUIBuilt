@@ -6,11 +6,13 @@ tags = ["FreeBSD"]
 categories = ["FreeBSD"]
 lastmod = "2024-02-20"
 +++
-I have been using servers as backups and sharing files for a long time. I have also been very facinated [about ZFS](https://openzfs.org/wiki/Main_Page) as a filesystem and commenced using it as part of OpenSolaris. To make a long story short, the size and cost of my servers have reduced over the years. Last year, 2023, I sold my dedicated server HW and cabinet. On that server, I connected two WD Red Sata SSD discs, 500 GB each, in a mirrored setup by ZFS. The server OS was FreeBSD 14, and when the server was sold, I kept my SSDs as a backup of my data.
+I have been using a server at home as backup and sharing files for a long time. I have also been very facinated [about ZFS](https://openzfs.org/wiki/Main_Page) as a filesystem and commenced using it as part of OpenSolaris. To make a long story short, the size and cost of my servers have reduced over the years. Last year, 2023, I sold my dedicated server HW and cabinet. On that server, I connected two WD Red Sata SSD discs, 500 GB each, in a mirrored setup by ZFS. The server OS was FreeBSD 14, and when the server was sold, I kept my SSDs as a backup of my data.
 
 # Raspberry Pi4 - 8GB ram
 
-I am not particularly interested in HW. My interests in IT are SW and development. But I have read about a Single Board Computer, aka SBC, named Raspberry Pi and I knew there was FreeBSD support for the Pi4. And the Raspberry Pi4 with 8 GB RAM is now my server setup. 
+I am not particularly interested in HW. My interests in IT are SW and development. But I have read about a Single Board Computer, aka SBC, named Raspberry Pi and I knew there was FreeBSD support for the Pi4. 
+
+And today a Raspberry Pi4 with 8 GB RAM is now my server setup. 
 
 # FreeBSD 14 and Netdata
 

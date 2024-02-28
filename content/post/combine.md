@@ -1,10 +1,10 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-20"
+date = "2024-02-25"
 title =  "Combine"
 tags = ["Combine", "Debounce"]
 categories = ["Combine"]
-lastmod = "2024-02-20"
+lastmod = "2024-02-25"
 +++
 Combine, a *declarative* library by Apple, is utilized in several parts of RsyncUI. Before the new `@Observable` macro was introduced Combine was also a requiered part of the property wrapper `@StateObject` in combination with `ObservableObject`. The new macro `@Observable` is not depended upon Combine and the following are examples of utilizing Combine in RsyncUI:
 

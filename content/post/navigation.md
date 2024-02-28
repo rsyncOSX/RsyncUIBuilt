@@ -1,10 +1,10 @@
 +++
 author = "Thomas Evensen"
-date = "2024-02-20"
+date = "2024-02-27"
 title =  "Navigation"
 tags = ["NavigationSplitView","NavigationStack"]
 categories = ["Navigation"]
-lastmod = "2024-02-20"
+lastmod = "2024-02-27"
 +++
 The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function.  The details part is computed every time the user select a function like the Synchronize view, Tasks view and so on. The navigation within usersetting is also by `NavigationSplitView`. The function `SidebarRow(sidebaritem: selectedview) -> View` returns icons for the sidebar functions. 
 
@@ -15,14 +15,12 @@ enum Sidebaritems: String, Identifiable, CaseIterable {
 }
 
 struct Sidebar: View {
-    ....
+    ...
     @State private var selectedview: Sidebaritems = .synchronize
     ...
 
     var body: some View {
         NavigationSplitView {
-            Divider()
-
             List(Sidebaritems.allCases, selection: $selectedview) { selectedview in
                 NavigationLink(value: selectedview) {
                     SidebarRow(sidebaritem: selectedview)
@@ -64,7 +62,6 @@ struct Sidebar: View {
     }
 }
 ```
-
 Navigation within **all** view is by `NavigationStack`: "*A view that displays a root view and enables you to present additional views over the root view*".  One root view is the tasks view, and the all other views like estimating details, execution of tasks and so on will be presented ontop of the root view. RsyncUI utilizes two APIs of  `NavigationStack`:
 
 The additional view is one view only and it is presented when `$somestate` becomes true.

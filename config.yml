@@ -1,6 +1,6 @@
 baseURL: "https://rsyncuibuilt.netlify.app/"
 title: RsyncUIbuilt
-paginate: 5
+paginate: 10
 theme: PaperMod
 
 enableRobotsTXT: true
@@ -67,7 +67,7 @@ params:
     imageTitle: my image
     buttons:
       - name: Posts
-        url: posts
+        url: post
       - name: Tags
         url: tags
 

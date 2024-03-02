@@ -2,11 +2,11 @@
 author = "Thomas Evensen"
 title = "About"
 date = "2021-03-11"
-description = "Who am I?"
+description = "About"
 lastmod = "2021-04-12"
 +++
 
 Hi, I am Thomas, e-mail: <thomeven@gmail.com>, the developer of RsyncOSX and RsyncUI. The development of RsyncOSX commenced early in 2016 as a personal project to learn Swift. And the development of RsyncUI began late in 2020 to learn SwiftUI. I have a master's degree in computing science, but I am not a *professional developer*. I did my master's in the days when Linux was released in 1991 and the Internet became a public service. And a few years ahead of that, in 1989, the Web was invented at Cern.
 
-In May 2022, I retired from work at the age of 62. I am [a passionate photographer](https://photosbythomas.netlify.app/gallery/) of nature and wildlife (birds) and love staying in the Norwegian mountains. Grandkids, photography, continuing maintenance of my macOS applications, and cross-country skiing are keeping me busy.
+In May 2022, I retired from work at the age of 62. I am [a passionate photographer](https://photosbythomas.netlify.app/) of nature and wildlife (birds) and love staying in [the Norwegian mountains (in Norwegian)](https://toppturer.netlify.app). Grandkids, photography, continuing maintenance of my macOS applications, and cross-country skiing are keeping me busy.
 

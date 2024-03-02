@@ -6,7 +6,7 @@ tags = ["NavigationSplitView","NavigationStack"]
 categories = ["Navigation"]
 lastmod = "2024-02-27"
 +++
-The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function.  The details part is computed every time the user select a function like the Synchronize view, Tasks view and so on. The navigation within usersetting is also by `NavigationSplitView`. The function `SidebarRow(sidebaritem: selectedview) -> View` returns icons for the sidebar functions. 
+The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function. The `NavigationLink` choose the right details part depended upont the value of `selectedview`.  The left column is built in the order of the enum values. 
 
 ```bash
 enum Sidebaritems: String, Identifiable, CaseIterable {

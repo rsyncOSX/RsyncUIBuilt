@@ -6,7 +6,12 @@ tags = ["NavigationSplitView","NavigationStack"]
 categories = ["Navigation"]
 lastmod = "2024-02-27"
 +++
-The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function. The `NavigationLink` choose the right details part depended upont the value of `selectedview`.  The left column is built in the order of the enum values. 
+The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function. 
+
+{{< figure src="/images/navigation/navigation.png" alt="" position="center" style="border-radius: 8px;" >}}
+
+
+The `NavigationLink` selects the details part depended upont the value of `selectedview`.  The left column is built in the order of the enum values. 
 
 ```bash
 enum Sidebaritems: String, Identifiable, CaseIterable {
@@ -62,7 +67,15 @@ struct Sidebar: View {
     }
 }
 ```
-Navigation within **all** view is by `NavigationStack`: "*A view that displays a root view and enables you to present additional views over the root view*".  One root view is the tasks view, and the all other views like estimating details, execution of tasks and so on will be presented ontop of the root view. RsyncUI utilizes two APIs of  `NavigationStack`:
+Navigation within views is by `NavigationStack`: "*A view that displays a root view and enables you to present additional views over the root view*".  One such root view is the rsync parameters view. Other views ontop of the rsync parameters view is default rsync parameters and verify task view. 
+
+Root view:
+{{< figure src="/images/navigation/navigationstack.png" alt="" position="center" style="border-radius: 8px;" >}}
+Default rsync parameters view:
+{{< figure src="/images/navigation/navigationstack2.png" alt="" position="center" style="border-radius: 8px;" >}}
+
+
+RsyncUI utilizes two APIs of  `NavigationStack`:
 
 The additional view is one view only and it is presented when `$somestate` becomes true.
 

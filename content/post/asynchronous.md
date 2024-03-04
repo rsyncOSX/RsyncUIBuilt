@@ -30,7 +30,8 @@ func execute(config: SynchronizeConfiguration, dryrun: Bool) async {
         somefunctionafterasynctaskiscompleted()
     }
 ```
-But that does not work when Combine is used to monitor when the external task is completed. 
+But that does not work when Combine is used to monitor `Process.didTerminateNotification` when the external task is completed. 
+
 ```bash
 NotificationCenter.default.publisher(
             for: Process.didTerminateNotification)

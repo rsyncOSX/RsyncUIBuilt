@@ -6,9 +6,7 @@ tags = ["SwiftData","JSON"]
 categories = ["dataflow"]
 lastmod ="2024-02-26"
 +++
-The flow and handling of data are slightly different in RsyncUI using JSON file vs SwiftData. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   
-
-There are *three files* saved to storage: tasks, log records and user settings.
+The flow and handling of data are slightly different in RsyncUI using JSON file vs SwiftData. From Apple Developement Documentations quote Apple: *"Combining Core Data’s proven persistence technology and Swift’s modern concurrency features, SwiftData enables you to add persistence to your app quickly, with minimal code and no external dependencies."*.   Sorting and filter data is also somewhat different using JSON or SwiftData as storage. There are *three files* saved to storage: tasks, log records and user settings.
 
 # JSON files as Storage
 
@@ -42,6 +40,48 @@ final class RsyncUIconfigurations {
 When tasks are updated, like timestamp last run, the class which executes the tasks does two jobs when executing tasks is completed. The internal datastructure is always updated. The first job is to send the changed updated datastructure up to the view by an *escaping closure*, `@escaping ([SynchronizeConfiguration]) -> Void)`. The view updates the observed variable holding the data structure about tasks and the SwiftUI runtime updates the views. The second job is to write the updates the permanent storage.
 
 When there are changes on data the complete datastructure is written to file, like if there are 2000 logrecords and adding a new log record causes 2001 records to be written to the JSON-file. Data for the views are made avaliable by a `@Bindable` property and an `@Observable` object.  
+
+## Sorting log records
+
+Filter and sort log records in JSON-file version is different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
+
+```bash
+func updatelogs() async {
+        if let logrecords = rsyncUIlogrecords.logrecords {
+            if debouncefilterstring != "" {
+                if hiddenID == -1 {
+                    var merged = [Log]()
+                    for i in 0 ..< logrecords.count {
+                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
+                    }
+                    let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
+                    ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
+                    }
+                } else {
+                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
+                        let records = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                        logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
+                        ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
+                        }
+                    }
+                }
+            } else {
+                if hiddenID == -1 {
+                    var merged = [Log]()
+                    for i in 0 ..< logrecords.count {
+                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
+                    }
+                    logs = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                } else {
+                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
+                        logs = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                    }
+                }
+            }
+        }
+    }
+```
 
 # SwiftData as Storage
 
@@ -148,11 +188,7 @@ Window("RsyncUI", id: "main") {
 
 You can create relations and much more in SwiftData, but for RsyncUI there is no need for an advanced datamodel. When data is changed, like update timestamp or create a log, the changes are propogated up to the view which initiated the change. The data is updated to the database by SwiftData and SwiftUI updates the views on the fly.  
 
-# Sorting  and filter
-
-Sorting and filter data is different using JSON or SwiftData as storage. Below is, as an exsample, of how to sort and filter log records.
-
-## SwiftData
+## Sorting log records
 
 Showing logcrecords by task, sorted by Date is done by getting the data by a `@Query` property using a Sortdescriptor. The View is *initialized* from the parent view sending in the UUID for the selected task, and a Predicate filter shows logs by UUID and a filter by date.
 
@@ -215,44 +251,4 @@ struct LogRecordsTableByUUIDView: View {
 }
 ````
 
-## JSON
 
-Filter and sort log records in JSON-file version is different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
-
-```bash
-func updatelogs() async {
-        if let logrecords = rsyncUIlogrecords.logrecords {
-            if debouncefilterstring != "" {
-                if hiddenID == -1 {
-                    var merged = [Log]()
-                    for i in 0 ..< logrecords.count {
-                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
-                    }
-                    let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
-                    ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
-                    }
-                } else {
-                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
-                        let records = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                        logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
-                        ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
-                        }
-                    }
-                }
-            } else {
-                if hiddenID == -1 {
-                    var merged = [Log]()
-                    for i in 0 ..< logrecords.count {
-                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
-                    }
-                    logs = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                } else {
-                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
-                        logs = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                    }
-                }
-            }
-        }
-    }
-```

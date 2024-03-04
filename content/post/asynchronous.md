@@ -43,9 +43,7 @@ NotificationCenter.default.publisher(
                 self.subscriptons.removeAll()
             }.store(in: &subscriptons)
 ```
-After the call `await process.executeProcess()` RsyncUI just continue execution. 
-
-The only way to get structured concurrency to work as expected is to write `task.waitUntilExit()` after the `task.run()`. This will enable structured concurrency to work.
+After the call `await process.executeProcess()` RsyncUI just continue execution. The only way to get structured concurrency to work as expected is to write `task.waitUntilExit()` after the `task.run()`. This will enable structured concurrency to work.
 
 ```bash
 do {
@@ -59,7 +57,7 @@ But I believe it is safer and more effective to use Combine to listen for a term
 
 # The Process objects
 
-There are two versions of the process object most for learning more about `async` and `await`. The difference between those two objects are minor, the async version marks the function for execution with keyword `async`. Calling the `async` require the `await` keyword. 
+The two versions of the process object, most for learning more about `async` and `await`. The difference between those two objects are minor, the async version marks the function for execution with keyword `async`. 
 
 - [the process object](https://github.com/rsyncOSX/RsyncUI/blob/main/RsyncUI/Model/Process/Main/RsyncProcess.swift)
 - [the async process object](https://github.com/rsyncOSX/RsyncUI/blob/main/RsyncUI/Model/Process/Main/Async/RsyncProcessAsync.swift)

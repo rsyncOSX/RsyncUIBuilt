@@ -18,19 +18,19 @@ The async execution is a class importing the `Process` library and the function 
 
 ```bash
 func execute(config: SynchronizeConfiguration, dryrun: Bool) async {
-        ...
+        
         let process = RsyncProcessAsync(arguments: arguments,
-                                        config: config,
-                                        processtermination: processtermination)
+                                        config: config)
         Task {
             await process.executeProcess()
         }
-        // After task is completed, continue here and
-        // execute any task after the async function is completed
+        // After task is completed, continue from here and
+        // execute requiered tasks after the async function is completed
+       
         somefunctionafterasynctaskiscompleted()
     }
 ```
-But that does not work when Combine is used to monitor `Process.didTerminateNotification` when the external task is completed. 
+But that does not work when Combine is used to monitor the process termination when the external task is completed. After the call `await process.executeProcess()` RsyncUI just continue execution. 
 
 ```bash
 NotificationCenter.default.publisher(
@@ -43,8 +43,7 @@ NotificationCenter.default.publisher(
                 self.subscriptons.removeAll()
             }.store(in: &subscriptons)
 ```
-After the call `await process.executeProcess()` RsyncUI just continue execution. The only way to get structured concurrency to work as expected is to write `task.waitUntilExit()` after the `task.run()`. This will enable structured concurrency to work.
-
+The only way to get structured concurrency to work as expected is to write `task.waitUntilExit()` after the `task.run()`. This will enable structured concurrency to work.
 ```bash
 do {
     try task.run()

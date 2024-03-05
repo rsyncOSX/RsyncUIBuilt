@@ -6,12 +6,15 @@ tags = ["NavigationSplitView","NavigationStack"]
 categories = ["Navigation"]
 lastmod = "2024-02-27"
 +++
-The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function. 
+The main navigation, when RsyncUI starts, is by a `NavigationSplitView`: *A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.* 
+
+## NavigationSplitView
+
+RsyncUI utilizes two columns. Left column for main functions and the right column for details about each main function. 
 
 {{< figure src="/images/navigation/navigation.png" alt="" position="center" style="border-radius: 8px;" >}}
 
-
-The `NavigationLink` selects the details part depended upont the value of `selectedview`.  The left column is built in the order of the enum values. 
+The `NavigationLink` selects the details part depended upon the value of `selectedview`.  The left column is built in the order of the enum values. 
 
 ```bash
 enum Sidebaritems: String, Identifiable, CaseIterable {
@@ -67,13 +70,18 @@ struct Sidebar: View {
     }
 }
 ```
+
+## NavigationStack
+
 Navigation within views is by `NavigationStack`: "*A view that displays a root view and enables you to present additional views over the root view*".  One such root view is the rsync parameters view. Other views ontop of the rsync parameters view is default rsync parameters and verify task view. 
 
 Root view:
-{{< figure src="/images/navigation/navigationstack.png" alt="" position="center" style="border-radius: 8px;" >}}
-Default rsync parameters view:
-{{< figure src="/images/navigation/navigationstack2.png" alt="" position="center" style="border-radius: 8px;" >}}
 
+{{< figure src="/images/navigation/navigationstack.png" alt="" position="center" style="border-radius: 8px;" >}}
+
+Default rsync parameters view:
+
+{{< figure src="/images/navigation/navigationstack2.png" alt="" position="center" style="border-radius: 8px;" >}}
 
 RsyncUI utilizes two APIs of  `NavigationStack`:
 

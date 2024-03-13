@@ -46,36 +46,23 @@ When there are changes on data the complete datastructure is written to file, li
 Filter and sort log records in JSON-file version is different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
 
 ```bash
-func updatelogs() async {
+@MainActor
+    func updatelogsbyfilter() async {
+        guard debouncefilterstring != "" else { return }
         if let logrecords = rsyncUIlogrecords.logrecords {
-            if debouncefilterstring != "" {
-                if hiddenID == -1 {
-                    var merged = [Log]()
-                    for i in 0 ..< logrecords.count {
-                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
-                    }
-                    let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
-                    ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
-                    }
-                } else {
-                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
-                        let records = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                        logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || 
-                        ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
-                        }
-                    }
+            if hiddenID == -1 {
+                var merged = [Log]()
+                for i in 0 ..< logrecords.count {
+                    merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
+                }
+                // return merged.sorted(by: \.date, using: >)
+                let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
                 }
             } else {
-                if hiddenID == -1 {
-                    var merged = [Log]()
-                    for i in 0 ..< logrecords.count {
-                        merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
-                    }
-                    logs = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
-                } else {
-                    if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
-                        logs = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                if let index = logrecords.firstIndex(where: { $0.hiddenID == hiddenID }) {
+                    let records = (logrecords[index].logrecords ?? []).sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
+                    logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
                     }
                 }
             }

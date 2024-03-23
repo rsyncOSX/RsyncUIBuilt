@@ -41,7 +41,7 @@ When tasks are updated, like timestamp last run, the class which executes the ta
 
 When there are changes on data the complete datastructure is written to file, like if there are 2000 logrecords and adding a new log record causes 2001 records to be written to the JSON-file. Data for the views are made avaliable by a `@Bindable` property and an `@Observable` object.  
 
-## Sorting log records
+## Sorting log records (JSON)
 
 Filter and sort log records in JSON-file version is different. The function get all log records, combine all arrays of records by `flatmap` and uses a standard filter function.
 
@@ -55,7 +55,6 @@ Filter and sort log records in JSON-file version is different. The function get 
                 for i in 0 ..< logrecords.count {
                     merged += [logrecords[i].logrecords ?? []].flatMap { $0 }
                 }
-                // return merged.sorted(by: \.date, using: >)
                 let records = merged.sorted(using: [KeyPathComparator(\Log.date, order: .reverse)])
                 logs = records.filter { ($0.dateExecuted?.en_us_date_from_string().long_localized_string_from_date().contains(debouncefilterstring)) ?? false || ($0.resultExecuted?.contains(debouncefilterstring) ?? false)
                 }
@@ -175,7 +174,7 @@ Window("RsyncUI", id: "main") {
 
 You can create relations and much more in SwiftData, but for RsyncUI there is no need for an advanced datamodel. When data is changed, like update timestamp or create a log, the changes are propogated up to the view which initiated the change. The data is updated to the database by SwiftData and SwiftUI updates the views on the fly.  
 
-## Sorting log records
+## Sorting log records (SwiftData)
 
 Showing logcrecords by task, sorted by Date is done by getting the data by a `@Query` property using a Sortdescriptor. The View is *initialized* from the parent view sending in the UUID for the selected task, and a Predicate filter shows logs by UUID and a filter by date.
 

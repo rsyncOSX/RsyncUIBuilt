@@ -10,8 +10,8 @@ RsyncUI is a pure *SwiftUI*  and *Swift* based macOS application utilizing the c
 
 | App      | Storage  | Lines of code | Swift files | Version 1.0 |
 | ----------- | ----------- |   ----------- | -------- | -------- |
-| RsyncUI  | JSON files |  about 11.8K     | about 150       | 6 May 2021 |
-| RsyncUI  | SwiftData |  about 11.7K     | about 137       | February 2024 |
+| RsyncUI  | JSON files |  about 11.6K     | about 146       | 6 May 2021 |
+| RsyncUI  | SwiftData |  about 10.2K     | about 122       | February 2024 |
 
 There are lesser code in the SwiftData version of RsyncUI; there are no read and write of JSON data wich requiere decode and encode data and no explicit write of all data when data is changed. Using SwiftData takes care of all this. 
 

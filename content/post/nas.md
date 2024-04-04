@@ -16,10 +16,10 @@ The latest version of Netdata was downloaded from GitHub and compiled out of the
 
 For the moment there is no official support for FreeBSD on the Pi5. But the default Raspberry PI OS 64-bit, which is based on Debian 12 Bookworm, supports the ZFS filesystem. To install ZFS follow the instructions in [OpenZFS for Debian](https://openzfs.github.io/openzfs-docs/Getting%20Started/Debian/index.html). I am not using ZFS on root, only importing the mirrored zpool used on the Pi4.
 
-Powersupplly: the official USB C Raspberry Pi 27W, max 5A.
+Powersupply: the official USB C Raspberry Pi 27W, max 5A.
 
 ## Raspberry Pi4 - 8GB ram
 
 The Raspberry Pi4 is official supported by FreeBSD. It is very easy to install FreeBSD on it; there are several guides around. My Pi4 runs plain vanilla FreeBSD 14. The two SSDs was connected, and ZFS filesystems were imported. Netdata was downloaded from GitHub and compiled on the Pi4 for monitoring. Max power consumption is between 8 and 9 watts. 
 
-Powersupplly: the official USB C Raspberry Pi 15W, max 3A.
+Powersupply: the official USB C Raspberry Pi 15W, max 3A.

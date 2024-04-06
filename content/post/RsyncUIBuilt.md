@@ -10,11 +10,11 @@ RsyncUI is by no means an advanced or complicated application. It is a pure Swif
 
 ## JSON files vs SwiftData
 
-A SwiftData version of RsyncUI was also developed but not released. And there is no plan to release it either. It was primarily a project to learn more about SwiftData. There is less code in the SwiftData version of RsyncUI; there is no read and write of JSON data, which requires decoding and encoding data, and no explicit write of all data when data is changed. Using SwiftData takes care of all this. 
+A SwiftData version of RsyncUI is also developed but not released. **And there is no plan to release it either**. It was primarily a project to learn more about SwiftData. There is less code in the SwiftData version of RsyncUI; there is no read and write of JSON data, which requires decoding and encoding data, and no explicit write of all data when data is changed. Using SwiftData takes care of all this. 
 
-I believe SwiftData is great for applications with a lot of data. As far as I have learned from my test project for RsyncUI and SwiftData, using SwiftData is kind of easy to learn and use in your project. It also makes sure your data is consistent when changed. SwiftData takes care of all updates, no explicit read and write as for JSON files.
+I believe SwiftData is great for applications with a lot of data. As far as I have learned from my test project for RsyncUI and SwiftData, using SwiftData is kind of easy to learn and use in your project. It also makes sure your data is consistent when changed. SwiftData takes care of all updates, no explicit read and write as for JSON files. 
 
-There are some more info about JSON vs SwiftData on this web. Trye the search function if interessted.
+There are some more info about JSON vs SwiftData on this web. Try the search function if interessted.
 
 | App      | Storage  | Lines of code | Swift files | Version 1.0 |
 | ----------- | ----------- |   ----------- | -------- | -------- |

@@ -6,7 +6,7 @@ tags = ["Development"]
 categories = ["Development"]
 lastmod = "2024-04-02"
 +++
-RsyncUI is by no means an advanced or complicated application. It is a pure SwiftUI and Swift based application, and learning about both languages has been and still is fun. And writing about the development is also fun. There are no deeper thoughts about this site. There are many developers out there writing about SwiftUI, discovering new features and how to use them.  This web is **not** a site to show how to use SwiftUI and new features about SwiftUI. This site is about how I use SwiftUI features in developing RsyncUI.  
+RsyncUI which is a pure SwiftUI and Swift based application, is by no means an advanced or complicated application. There are many developers out there writing about SwiftUI, new features in SwiftUI and how to use them. This web is **not** a site to show how to use SwiftUI and new features about SwiftUI. This web is about how I use SwiftUI in developing RsyncUI.  
 
 ## JSON files vs SwiftData
 
